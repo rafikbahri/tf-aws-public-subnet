@@ -13,8 +13,22 @@ resource "aws_subnet" "subnet" {
   )
 }
 
+resource "aws_route_table" "public" {
+  count  = var.has_internet_access ? 1 : 0
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.igw_id
+  }
+
+  tags = {
+    Name = "PublicSubnetInternetRouteTable"
+  }
+}
+
 resource "aws_route_table_association" "internet" {
   count          = var.has_internet_access ? 1 : 0
   subnet_id      = aws_subnet.subnet.id
-  route_table_id = var.public_internet_route_table_id
+  route_table_id = aws_route_table.public.id
 }

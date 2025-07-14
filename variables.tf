@@ -29,15 +29,15 @@ variable "map_public_ip_on_launch" {
 }
 
 variable "has_internet_access" {
-  description = "Whether this networl has internet access"
+  description = "Whether this network has internet access"
   type        = bool
   default     = false
 }
 
-variable "public_internet_route_table_id" {
-  description = "Public internet route table ID"
+variable "igw_id" {
   type        = string
   default     = ""
+  description = "Internet Gateway ID"
 }
 
 variable "tags" {
